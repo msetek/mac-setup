@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+#/usr/bin/env bash
+
+readonly BUNDLEDIR=$(dirname $(grealpath --canonicalize-existing --logical "$BASH_SOURCE"))
+
+macos_dock() {
+    # Configure the dock
+    echo "Configure the macOS dock"
+    defaults write com.apple.dock autohide -bool true
+    killall "Dock" &> /dev/null
+}
+
+macos_full_keyboard_access() {
+    echo "Enabling full keyboard access for all controls (enable Tab in modal dialogs, menu windows, etc.)"
+    defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+}
+
+macos_hide_desktop_icons() {
+    echo "Hiding all desktop icons"
+    defaults write com.apple.finder CreateDesktop false
+    killall Finder &> /dev/null
+}
+
+brew_cask_installed() {
+    brew cask info $1 &> /dev/null
+}
+
+ssh_fix_config() {
+    if grep -e '^\ *SendEnv LANG LC_\*' /etc/ssh/ssh_config > /dev/null; then
+        echo "Patch /etc/ssh/ssh_config"
+        sudo patch -p0 <<'EOF'
+--- /etc/ssh/ssh_config.orig    2016-07-28 02:59:24.000000000 +0200
++++ /etc/ssh/ssh_config 2016-07-28 02:59:35.000000000 +0200
+@@ -19,7 +19,7 @@
+ 
+ # Apple:
+  Host *
+-   SendEnv LANG LC_*
++#   SendEnv LANG LC_*
+ #   AskPassGUI yes
+EOF
+    fi
+}
+
+logout_user() {
+    osascript -e 'tell app "System Events" to log out'
+}
+
+brew_install() {
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew bundle
+}
+
+macos_dock
+macos_full_keyboard_access
+macos_hide_desktop_icons
+ssh_fix_config
+brew_install
+
+echo "Setup completed"
+logout_user

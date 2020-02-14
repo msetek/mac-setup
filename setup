@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-#/usr/bin/env bash
-
-readonly BUNDLEDIR=$(dirname $(grealpath --canonicalize-existing --logical "$BASH_SOURCE"))
+readonly WORKDIR=$(dirname "$BASH_SOURCE")
+readonly BUNDLEDIR=$WORKDIR
 
 macos_dock() {
     # Configure the dock

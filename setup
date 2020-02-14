@@ -51,11 +51,20 @@ brew_install() {
     brew bundle
 }
 
+configure_emacs() {
+    if mkdir -p ~/.emacs.d; then
+	cp -iv $WORKDIR/init.el ~/.emacs.d/
+    else
+	echo "Could not create ~/.emacs.d" >&2
+    fi
+}
+
 macos_dock
 macos_full_keyboard_access
 macos_hide_desktop_icons
 ssh_fix_config
 brew_install
+configure_emacs
 
 echo "Setup completed"
 logout_user

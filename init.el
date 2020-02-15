@@ -22,6 +22,7 @@ There are two things you can do about this warning:
 
 (tool-bar-mode 0)
 (setq mac-right-option-modifier nil)
+(setq indent-tabs-mode nil)
 (server-start)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

@@ -18,3 +18,8 @@ brew "azure-cli"
 brew "dict"
 brew "kubernetes-cli"
 brew "helm"
+cask "hazeover"
+brew "pulumi"
+brew "pyenv"
+cask "kindle"
+

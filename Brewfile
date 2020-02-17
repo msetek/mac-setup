@@ -22,4 +22,4 @@ cask "hazeover"
 brew "pulumi"
 brew "pyenv"
 cask "kindle"
-
+brew "terraform"

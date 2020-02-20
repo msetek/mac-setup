@@ -70,6 +70,14 @@ EOF
     fi
 }
 
+configure_jetbrains_npm() {
+    mkdir -p "$(nodenv root)/lib/node_modules"
+    if [[ ! -a "$(nodenv root)"/lib/node_modules/npm ]]; then
+	git clone https://github.com/nodenv/jetbrains-npm "$(nodenv root)"/lib/node_modules/npm
+	echo "Now, Jetbrains IDEs (e.g. Webstorm) should find a npm command called jetbrains-npm"
+    fi
+}
+
 macos_dock
 macos_full_keyboard_access
 macos_hide_desktop_icons

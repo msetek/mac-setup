@@ -59,12 +59,24 @@ configure_emacs() {
     fi
 }
 
+configure_git() {
+    local ignorefile=$HOME/.gitignore_global
+
+    git config --global core.excludesfile $ignorefile
+    if [[ ! -a $ignorefile ]]; then
+	cat <<'EOF' > $ignorefile
+.idea/
+EOF
+    fi
+}
+
 macos_dock
 macos_full_keyboard_access
 macos_hide_desktop_icons
 ssh_fix_config
 brew_install
 configure_emacs
+configure_git
 
 echo "Setup completed"
 logout_user
